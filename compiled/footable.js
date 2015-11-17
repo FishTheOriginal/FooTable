@@ -1335,6 +1335,7 @@
 			 * @type {jQuery}
 			 */
 			this.$toggle = $('<span/>', {'class': 'footable-toggle fooicon fooicon-plus'});
+			//this.$toggle = $('<span/>', {'class': 'footable-toggle glyphicon glyphicon-plus'});
 
 			var isObj = F.is.hash(dataOrElement),
 				hasOptions = isObj && F.is.hash(dataOrElement.options) && F.is.hash(dataOrElement.value);
@@ -1519,6 +1520,7 @@
 			}
 			this.$el.attr('data-expanded', true);
 			this.$toggle.removeClass('fooicon-plus').addClass('fooicon-minus');
+			//this.$toggle.removeClass('glyphicon-plus').addClass('glyphicon-minus');
 			this.expanded = true;
 		},
 		/**
@@ -1534,6 +1536,7 @@
 			this.$details.detach();
 			this.$el.removeAttr('data-expanded');
 			this.$toggle.removeClass('fooicon-minus').addClass('fooicon-plus');
+			//this.$toggle.removeClass('glyphicon-minus').addClass('glyphicon-plus');
 			if (F.is.boolean(setExpanded) ? setExpanded : true) this.expanded = false;
 		},
 		/**
@@ -1557,20 +1560,7 @@
 		 */
 		draw: function($parent){
 			if (!this.created) this.$create();
-			$parent.append(this.$el);
-			var self = this;
-			F.arr.each(self.cells, function(cell){
-				cell.$el.css('display', (cell.column.hidden || !cell.column.visible  ? 'none' : 'table-cell'));
-				if (self.ft.rows.showToggle && self.ft.columns.hasHidden){
-					if ((self.ft.rows.toggleColumn == 'first' && cell.column.index == self.ft.columns.firstVisibleIndex)
-						|| (self.ft.rows.toggleColumn == 'last' && cell.column.index == self.ft.columns.lastVisibleIndex)) {
-						cell.$el.prepend(self.$toggle);
-					}
-				}
-			});
-			if (this.expanded){
-				this.expand();
-			}
+			return;
 		},
 		/**
 		 * Toggles the row between it's expanded and collapsed state if there are hidden columns.
@@ -1735,6 +1725,8 @@
 					if (!F.str.startsWith(classes[i], 'footable')) self.classes.push(classes[i]);
 				}
 				var $loader = $('<div/>', { 'class': 'footable-loader' }).append($('<span/>', {'class': 'fooicon fooicon-loader'}));
+				var $loader = $('<div/>', { 'class': 'footable-loader' }).append($('<span/>', {'class': 'glyphicon glyphicon-loader'}));
+				
 				self.$el.hide().after($loader);
 				return self.execute(false, false, 'preinit', data).always(function(){
 					self.$el.show();
@@ -2916,9 +2908,9 @@
 						d.resolve(result);
 					}
 				}
-				if (F.is.jq($rows)){
-					complete($rows);
-				} else if (F.is.array(self.o.rows) && self.o.rows.length > 0){
+				//if (F.is.jq($rows)){
+				//	complete($rows);
+				if (F.is.array(self.o.rows) && self.o.rows.length > 0){
 					complete(self.o.rows);
 				} else if (F.is.promise(self.o.rows)){
 					self.o.rows.then(function(rows){
@@ -3345,13 +3337,15 @@
 			// add it to a row and then populate it with the search input and column selector dropdown.
 			self.$row = $('<tr/>', {'class': 'footable-filtering'}).prependTo(self.ft.$el.children('thead'));
 			self.$cell = $('<th/>').attr('colspan', self.ft.columns.visibleColspan).appendTo(self.$row);
-			self.$form = $('<form/>', {'class': 'form-inline'}).append($form_grp).appendTo(self.$cell);
+			self.$form = $('<div/>', {'class': 'form-inline', role:'role'}).append($form_grp).appendTo(self.$cell);
 
-			self.$input = $('<input/>', {type: 'text', 'class': 'form-control', placeholder: self.placeholder});
+			self.$input = $('<input/>', {type: 'text', 'class': 'form-control input-underline input-lg', placeholder: self.placeholder});
 
 			self.$button = $('<button/>', {type: 'button', 'class': 'btn btn-primary'})
 				.on('click', { self: self }, self._onSearchButtonClicked)
 				.append($('<span/>', {'class': 'fooicon fooicon-search'}));
+
+				//.append($('<span/>', {'class': 'glyphicon glyphicon-search'}));
 
 			self.$dropdown = $('<ul/>', {'class': 'dropdown-menu dropdown-menu-right'}).append(
 				F.arr.map(self.ft.columns.array, function (col) {
@@ -3442,6 +3436,7 @@
 				this.removeFilter('search');
 			}
 			this.$button.children('.fooicon').removeClass('fooicon-search').addClass('fooicon-remove');
+			//this.$button.children('.glyphicon').removeClass('glyphicon-search').addClass('glyphicon-remove');
 			return this._filter();
 		},
 		/**
@@ -3453,6 +3448,7 @@
 		 */
 		clear: function(){
 			this.$button.children('.fooicon').removeClass('fooicon-remove').addClass('fooicon-search');
+			//this.$button.children('.glyphicon').removeClass('glyphicon-remove').addClass('glyphicon-search');
 			this.$input.val(null);
 			this.removeFilter('search');
 			return this._filter();
@@ -3560,6 +3556,9 @@
 			var $icon = self.$button.children('.fooicon');
 			if ($icon.hasClass('fooicon-remove')) self.clear();
 			else self.filter();
+			//var $icon = self.$button.children('.glyphicon');
+			//if ($icon.hasClass('glyphicon-remove')) self.clear();
+			//else self.filter();
 		},
 		/**
 		 * Handles the click event for the column checkboxes in the {@link FooTable.Filtering#$dropdown}.
@@ -3577,6 +3576,11 @@
 					$icon.removeClass('fooicon-remove').addClass('fooicon-search');
 					self.filter();
 				}
+				//var $icon = self.$button.children('.glyphicon');
+				//if ($icon.hasClass('glyphicon-remove')){
+				//	$icon.removeClass('glyphicon-remove').addClass('glyphicon-search');
+				//	self.filter();
+				//}
 			}, self.delay);
 		},
 		/**
@@ -3898,7 +3902,7 @@
 		min: 3,
 		space: 'AND',
 		placeholder: 'Search',
-		position: 'right'
+		position: 'left'
 	};
 })(FooTable);
 (function(F){
@@ -4058,6 +4062,7 @@
 				F.arr.each(self.ft.columns.array, function(col){
 					if (col.sortable){
 						col.$el.addClass('footable-sortable').append($('<span/>', {'class': 'fooicon fooicon-sort'}));
+						//col.$el.addClass('footable-sortable').append($('<span/>', {'class': 'glyphicon glyphicon-sort'}));
 					}
 				});
 				self.ft.$el.on('click.footable', '.footable-sortable', { self: self }, self._onSortClicked);
@@ -4085,6 +4090,7 @@
 				self.ft.$el.children('thead').children('tr.footable-header')
 					.children('.footable-sortable').removeClass('footable-sortable')
 					.find('span.fooicon').remove();
+					//.find('span.glyphicon').remove();
 			});
 		},
 		/**
@@ -4116,6 +4122,12 @@
 			$sortable.not($active).children('.fooicon').addClass('fooicon-sort');
 			$active.addClass(self.column.direction == 'ASC' ? 'footable-asc' : 'footable-desc')
 				.children('.fooicon').addClass(self.column.direction == 'ASC' ? 'fooicon-sort-asc' : 'fooicon-sort-desc');
+            //$sortable.removeClass('footable-asc footable-desc').children('.glyphicon').removeClass('glyphicon-sort glyphicon-sort-asc glyhicon-sort-desc');
+			//$sortable.not($active).children('.glyphicon').addClass('glyphicon-sort');
+			//$active.addClass(self.column.direction == 'ASC' ? 'footable-asc' : 'footable-desc')
+			//	.children('.glyphicon').addClass(self.column.direction == 'ASC' ? 'glyphicon-sort-asc' : 'glyphicon-sort-desc');
+
+
 		},
 
 		/* PUBLIC */

@@ -288,13 +288,15 @@
 			// add it to a row and then populate it with the search input and column selector dropdown.
 			self.$row = $('<tr/>', {'class': 'footable-filtering'}).prependTo(self.ft.$el.children('thead'));
 			self.$cell = $('<th/>').attr('colspan', self.ft.columns.visibleColspan).appendTo(self.$row);
-			self.$form = $('<form/>', {'class': 'form-inline'}).append($form_grp).appendTo(self.$cell);
+			self.$form = $('<div/>', {'class': 'form-inline', role:'role'}).append($form_grp).appendTo(self.$cell);
 
-			self.$input = $('<input/>', {type: 'text', 'class': 'form-control', placeholder: self.placeholder});
+			self.$input = $('<input/>', {type: 'text', 'class': 'form-control input-underline input-lg', placeholder: self.placeholder});
 
 			self.$button = $('<button/>', {type: 'button', 'class': 'btn btn-primary'})
 				.on('click', { self: self }, self._onSearchButtonClicked)
 				.append($('<span/>', {'class': 'fooicon fooicon-search'}));
+
+				//.append($('<span/>', {'class': 'glyphicon glyphicon-search'}));
 
 			self.$dropdown = $('<ul/>', {'class': 'dropdown-menu dropdown-menu-right'}).append(
 				F.arr.map(self.ft.columns.array, function (col) {
@@ -385,6 +387,7 @@
 				this.removeFilter('search');
 			}
 			this.$button.children('.fooicon').removeClass('fooicon-search').addClass('fooicon-remove');
+			//this.$button.children('.glyphicon').removeClass('glyphicon-search').addClass('glyphicon-remove');
 			return this._filter();
 		},
 		/**
@@ -396,6 +399,7 @@
 		 */
 		clear: function(){
 			this.$button.children('.fooicon').removeClass('fooicon-remove').addClass('fooicon-search');
+			//this.$button.children('.glyphicon').removeClass('glyphicon-remove').addClass('glyphicon-search');
 			this.$input.val(null);
 			this.removeFilter('search');
 			return this._filter();
@@ -503,6 +507,9 @@
 			var $icon = self.$button.children('.fooicon');
 			if ($icon.hasClass('fooicon-remove')) self.clear();
 			else self.filter();
+			//var $icon = self.$button.children('.glyphicon');
+			//if ($icon.hasClass('glyphicon-remove')) self.clear();
+			//else self.filter();
 		},
 		/**
 		 * Handles the click event for the column checkboxes in the {@link FooTable.Filtering#$dropdown}.
@@ -520,6 +527,11 @@
 					$icon.removeClass('fooicon-remove').addClass('fooicon-search');
 					self.filter();
 				}
+				//var $icon = self.$button.children('.glyphicon');
+				//if ($icon.hasClass('glyphicon-remove')){
+				//	$icon.removeClass('glyphicon-remove').addClass('glyphicon-search');
+				//	self.filter();
+				//}
 			}, self.delay);
 		},
 		/**
@@ -841,7 +853,7 @@
 		min: 3,
 		space: 'AND',
 		placeholder: 'Search',
-		position: 'right'
+		position: 'left'
 	};
 })(FooTable);
 (function(F){

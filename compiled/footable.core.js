@@ -1335,6 +1335,7 @@
 			 * @type {jQuery}
 			 */
 			this.$toggle = $('<span/>', {'class': 'footable-toggle fooicon fooicon-plus'});
+			//this.$toggle = $('<span/>', {'class': 'footable-toggle glyphicon glyphicon-plus'});
 
 			var isObj = F.is.hash(dataOrElement),
 				hasOptions = isObj && F.is.hash(dataOrElement.options) && F.is.hash(dataOrElement.value);
@@ -1519,6 +1520,7 @@
 			}
 			this.$el.attr('data-expanded', true);
 			this.$toggle.removeClass('fooicon-plus').addClass('fooicon-minus');
+			//this.$toggle.removeClass('glyphicon-plus').addClass('glyphicon-minus');
 			this.expanded = true;
 		},
 		/**
@@ -1534,6 +1536,7 @@
 			this.$details.detach();
 			this.$el.removeAttr('data-expanded');
 			this.$toggle.removeClass('fooicon-minus').addClass('fooicon-plus');
+			//this.$toggle.removeClass('glyphicon-minus').addClass('glyphicon-plus');
 			if (F.is.boolean(setExpanded) ? setExpanded : true) this.expanded = false;
 		},
 		/**
@@ -1557,20 +1560,7 @@
 		 */
 		draw: function($parent){
 			if (!this.created) this.$create();
-			$parent.append(this.$el);
-			var self = this;
-			F.arr.each(self.cells, function(cell){
-				cell.$el.css('display', (cell.column.hidden || !cell.column.visible  ? 'none' : 'table-cell'));
-				if (self.ft.rows.showToggle && self.ft.columns.hasHidden){
-					if ((self.ft.rows.toggleColumn == 'first' && cell.column.index == self.ft.columns.firstVisibleIndex)
-						|| (self.ft.rows.toggleColumn == 'last' && cell.column.index == self.ft.columns.lastVisibleIndex)) {
-						cell.$el.prepend(self.$toggle);
-					}
-				}
-			});
-			if (this.expanded){
-				this.expand();
-			}
+			return;
 		},
 		/**
 		 * Toggles the row between it's expanded and collapsed state if there are hidden columns.
@@ -1735,6 +1725,8 @@
 					if (!F.str.startsWith(classes[i], 'footable')) self.classes.push(classes[i]);
 				}
 				var $loader = $('<div/>', { 'class': 'footable-loader' }).append($('<span/>', {'class': 'fooicon fooicon-loader'}));
+				var $loader = $('<div/>', { 'class': 'footable-loader' }).append($('<span/>', {'class': 'glyphicon glyphicon-loader'}));
+				
 				self.$el.hide().after($loader);
 				return self.execute(false, false, 'preinit', data).always(function(){
 					self.$el.show();
@@ -2916,9 +2908,9 @@
 						d.resolve(result);
 					}
 				}
-				if (F.is.jq($rows)){
-					complete($rows);
-				} else if (F.is.array(self.o.rows) && self.o.rows.length > 0){
+				//if (F.is.jq($rows)){
+				//	complete($rows);
+				if (F.is.array(self.o.rows) && self.o.rows.length > 0){
 					complete(self.o.rows);
 				} else if (F.is.promise(self.o.rows)){
 					self.o.rows.then(function(rows){

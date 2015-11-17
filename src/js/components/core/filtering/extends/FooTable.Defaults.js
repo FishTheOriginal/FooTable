@@ -17,6 +17,6 @@
 		min: 3,
 		space: 'AND',
 		placeholder: 'Search',
-		position: 'right'
+		position: 'left'
 	};
 })(FooTable);

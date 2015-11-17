@@ -87,6 +87,7 @@
 				F.arr.each(self.ft.columns.array, function(col){
 					if (col.sortable){
 						col.$el.addClass('footable-sortable').append($('<span/>', {'class': 'fooicon fooicon-sort'}));
+						//col.$el.addClass('footable-sortable').append($('<span/>', {'class': 'glyphicon glyphicon-sort'}));
 					}
 				});
 				self.ft.$el.on('click.footable', '.footable-sortable', { self: self }, self._onSortClicked);
@@ -114,6 +115,7 @@
 				self.ft.$el.children('thead').children('tr.footable-header')
 					.children('.footable-sortable').removeClass('footable-sortable')
 					.find('span.fooicon').remove();
+					//.find('span.glyphicon').remove();
 			});
 		},
 		/**
@@ -145,6 +147,12 @@
 			$sortable.not($active).children('.fooicon').addClass('fooicon-sort');
 			$active.addClass(self.column.direction == 'ASC' ? 'footable-asc' : 'footable-desc')
 				.children('.fooicon').addClass(self.column.direction == 'ASC' ? 'fooicon-sort-asc' : 'fooicon-sort-desc');
+            //$sortable.removeClass('footable-asc footable-desc').children('.glyphicon').removeClass('glyphicon-sort glyphicon-sort-asc glyhicon-sort-desc');
+			//$sortable.not($active).children('.glyphicon').addClass('glyphicon-sort');
+			//$active.addClass(self.column.direction == 'ASC' ? 'footable-asc' : 'footable-desc')
+			//	.children('.glyphicon').addClass(self.column.direction == 'ASC' ? 'glyphicon-sort-asc' : 'glyphicon-sort-desc');
+
+
 		},
 
 		/* PUBLIC */

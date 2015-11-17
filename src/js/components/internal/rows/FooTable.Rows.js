@@ -83,9 +83,9 @@
 						d.resolve(result);
 					}
 				}
-				if (F.is.jq($rows)){
-					complete($rows);
-				} else if (F.is.array(self.o.rows) && self.o.rows.length > 0){
+				//if (F.is.jq($rows)){
+				//	complete($rows);
+				if (F.is.array(self.o.rows) && self.o.rows.length > 0){
 					complete(self.o.rows);
 				} else if (F.is.promise(self.o.rows)){
 					self.o.rows.then(function(rows){

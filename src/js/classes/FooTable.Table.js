@@ -133,6 +133,8 @@
 					if (!F.str.startsWith(classes[i], 'footable')) self.classes.push(classes[i]);
 				}
 				var $loader = $('<div/>', { 'class': 'footable-loader' }).append($('<span/>', {'class': 'fooicon fooicon-loader'}));
+				var $loader = $('<div/>', { 'class': 'footable-loader' }).append($('<span/>', {'class': 'glyphicon glyphicon-loader'}));
+				
 				self.$el.hide().after($loader);
 				return self.execute(false, false, 'preinit', data).always(function(){
 					self.$el.show();
