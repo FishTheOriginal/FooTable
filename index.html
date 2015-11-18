@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html class="no-js" ng-app="footable">
+<head>
+<title>Footable Angular Plugin</title>
+<meta charset="utf-8">
+<meta name="description" content="Footable Angular Plugin"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, minimal-ui"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX" crossorigin="anonymous">
+<link rel="stylesheet" type href="css/app.css" />
+<link rel="stylesheet" type="text/css" href="css/footable.min.css" />
+<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js" /></script>
+<script type="text/javascript" src="bower_components/angular/angular.min.js" /></script>
+<script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<script type="text/javascript" src="app/footable.min.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+<div class="container">
+<div id="navbar" class="collapse navbar-collapse">
+<ul class="nav navbar-nav">
+<li><a href="https://github.com/dafinley/FooTable">Github</a></li>
+</ul>
+</div>
+</div>
+</nav>
+<div ui-view></div>
+<script type="text/javascript">
+angular.module('footable', ['ui.router']).config(function($stateProvider, $urlRouterProvider){ 
+	$stateProvider.state('home', {url: '/', templateUrl: 'app/home.html', controller: 'HomeCtrl'});
+    $urlRouterProvider.otherwise('/');
+	              });
+</script>
+<script type="text/javascript" src="app/home-ctrl.js"></script>
+</body>
+</html>
