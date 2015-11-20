@@ -1,6 +1,6 @@
 
 'use strict';
-angular.module('footable').controller('HomeCtrl', ['$scope',function($scope) {
+angular.module('footable').controller('TableCtrl', ['$scope',function($scope) {
 
    var firstName = ['Cedric', 'Justin', 'Nicole', 'Tasha', 'Matt', 'Maria', 'Samson', 'Selena'];
    var lastName = ['Smith','Rodriguez', 'Jones', 'Johnson', 'Patterson'];
@@ -9,6 +9,7 @@ angular.module('footable').controller('HomeCtrl', ['$scope',function($scope) {
    var favSport = ['Basketball', 'Football', 'Soccer', 'Baseball', 'Track & Field', 'Lacrosse'];
    var favFood = ['Gumbo', 'Jambalaya', 'Crawfish Etouffee', 'Spaghetti', 'Cheeseburger', 'Lasagna'];
    var job = ['Engineer', 'Lawyer', 'Doctor', 'Architect', 'Accountant', 'HR Manager', 'Electrician', 'Coach'];
+   var graduationDate = [new Date(2015, 3, 23), new Date(2015, 4, 24), new Date(2015, 9, 2), new Date(2015, 10,19)];
    $scope.allData = [];
    $scope.footable = {};
 
@@ -23,11 +24,11 @@ angular.module('footable').controller('HomeCtrl', ['$scope',function($scope) {
    		d.favsport = favSport[Math.floor(favSport.length * Math.random())];
    		d.favfood = favFood[Math.floor(favFood.length * Math.random())];
    		d.job = job[Math.floor(job.length * Math.random())];
+   		d.graduation = graduationDate[Math.floor(graduationDate.length * Math.random())];
+   		d.gradTime = d.graduation.getTime();
 
    		$scope.allData.push(d);
    	}
-
-   	console.log($scope.allData);
 
    };
 
@@ -35,7 +36,8 @@ angular.module('footable').controller('HomeCtrl', ['$scope',function($scope) {
 
    };
 
-   $scope.viewRow = function(d){
+   $scope.outputRow = function(d){
+   	console.log(d);
 
    };
 
@@ -49,10 +51,6 @@ angular.module('footable').directive('footable',function($compile, $parse, $time
     return {
       link: function(scope,element, attrs){
         
-        console.log(scope);
-        console.log(element);
-        console.log(attrs);
-        console.log($timeout);
         var paging = 50;
 
         scope.showData = scope.allData.slice(0, Math.min(paging, scope.allData.length));
@@ -61,7 +59,7 @@ angular.module('footable').directive('footable',function($compile, $parse, $time
       "paging": {"enabled":true, "size": paging},
       "filtering": {"enabled":true},
       "sorting": {"enabled":true},
-      "rows": scope.showData,
+      "rows": scope.allData,
       "on": {
         "postdraw.ft.table": function(a, b, c){
           var users = b.rows.array;
