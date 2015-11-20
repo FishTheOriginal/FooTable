@@ -15,7 +15,7 @@ angular.module('footable').controller('TableCtrl', ['$scope',function($scope) {
 
    $scope.generateData = function(){
 
-   	for(var i = 0; i < 300; i++){
+   	for(var i = 0; i < 10000; i++){
    		var d = {};
    		d.firstname = firstName[Math.floor(firstName.length * Math.random())];
    		d.lastname = lastName[Math.floor(lastName.length * Math.random())];
@@ -51,7 +51,7 @@ angular.module('footable').directive('footable',function($compile, $parse, $time
     return {
       link: function(scope,element, attrs){
         
-        var paging = 50;
+        var paging = 25;
 
         scope.showData = scope.allData.slice(0, Math.min(paging, scope.allData.length));
 
