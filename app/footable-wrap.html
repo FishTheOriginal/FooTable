@@ -1,0 +1,26 @@
+<table class="table table-striped footable" ng-show="!loading">
+		<thead>
+		<tr>
+		<th data-name="firstname">First Name</th>
+		<th data-name="lastname">Last Name</th>
+		<th data-name="state">State</th>
+		<th data-name="age">Age</th>
+		<th data-name="job">Job</th>
+		<th data-name="graduation">Graduation Date</th>
+		<th data-name="favsport">Favorite Sport</th>
+		<th data-name="favfood" data-breakpoints="xs">Favorite Food</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr class="row-click" ng-repeat="d in showData" ng-click="outputRow(d)">
+		<td>{{d.firstname}}</td>
+		<td>{{d.lastname}}</td>
+		<td>{{d.state}}</td>
+		<td>{{d.age}}</td>
+		<td>{{d.job}}</td>
+		<td data-value="{{d.gradTime}}">{{d.graduation|date:'shortDate'}}</td>
+		<td>{{d.favsport}}</td>
+		<td>{{d.favfood}}</td>
+		</tr>
+		</tbody>
+		</table>
